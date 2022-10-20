@@ -1,0 +1,9 @@
+name: project-test
+on: push
+jobs:
+  run-test:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: make lint
+    - uses: make test
