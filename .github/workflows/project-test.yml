@@ -2,9 +2,8 @@ name: project-test
 on: push
 jobs:
   run-test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: make install
-    - uses: make lint
-    - uses: make test
+    - run: make lint
+    - run: make test
