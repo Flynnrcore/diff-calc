@@ -3,6 +3,7 @@ import path from 'path';
 import _ from 'lodash';
 
 const getPath = (file) => path.resolve(process.cwd(), file);
+const readFileSync = (filename) => fs.readFileSync(getPath(filename));
 
 const getCompareObj = (obj1, obj2) => {
   const keysObj1 = Object.keys(obj1);
@@ -23,12 +24,15 @@ const getCompareObj = (obj1, obj2) => {
 };
 
 const genDiff = (file1, file2) => {
-  const firstFile = JSON.parse(fs.readFileSync(getPath(file1), 'utf-8'));
-  const secondFile = JSON.parse(fs.readFileSync(getPath(file2), 'utf-8'));
-  const result = getCompareObj(firstFile, secondFile);
-  console.log(`{
-${result.join('\n')}
-  }`);
+  const firstFile = JSON.parse(readFileSync(file1), 'utf-8');
+  const secondFile = JSON.parse(readFileSync(file2), 'utf-8');
+  const compareFiles = getCompareObj(firstFile, secondFile);
+  const result = `{
+${compareFiles.join('\n')}
+}`;
+
+  console.log(result);
+  return result;
 };
 
 export default genDiff;
