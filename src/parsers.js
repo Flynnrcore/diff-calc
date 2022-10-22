@@ -12,8 +12,6 @@ const getParse = (file) => {
     parse = JSON.parse(readFileSync(file), 'utf-8');
   } else if (format === '.yml' || format === '.yaml') {
     parse = yaml.load(readFileSync(file), 'utf-8');
-  } else {
-    throw new Error('Unsupported format!');
   }
   return parse;
 };
