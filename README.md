@@ -9,3 +9,6 @@
 ### CodeClimat badges:
 [![Maintainability](https://api.codeclimate.com/v1/badges/46fbedbde962c0bdf92f/maintainability)](https://codeclimate.com/github/Flynnrcore/frontend-project-46/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/46fbedbde962c0bdf92f/test_coverage)](https://codeclimate.com/github/Flynnrcore/frontend-project-46/test_coverage)
+
+## Start, help about and operation of the programm
+<script id="asciicast-WhysC51z9SRV5rB4fVLRkUJmk" src="https://asciinema.org/a/WhysC51z9SRV5rB4fVLRkUJmk.js" async></script>
