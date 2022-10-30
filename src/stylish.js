@@ -1,13 +1,14 @@
-const stylish = (arr, replacer = ' ', spaceCount = 1) => {
+const stylish = (arr, replacer = ' ', spaceCount = 2) => {
   const iter = (currentValue, depth) => {
-    /* if (typeof (currentValue.type) !== 'object' || currentValue === null) {
-      return String(currentValue);
-    } */
     const indentSize = depth * spaceCount;
     const currentIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spaceCount);
 
     const lines = currentValue.map((obj) => {
+      if (obj.type === 'nested') {
+        return `${currentIndent}  ${obj.key}: ${iter(obj.children, depth + 2)}`;
+      }
+
       switch (obj.type) {
         case 'changed':
           return `${currentIndent}- ${obj.key}: ${obj.value1}
