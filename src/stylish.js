@@ -1,23 +1,23 @@
-const stylish = (arr, replacer = ' ', spaceCount = 2) => {
-  const stringify = (value, replace = ' ', spacesCount = 1) => {
-    const iter = (currentValue, depth) => {
-      if (typeof (currentValue) !== 'object' || currentValue === null) {
-        return String(currentValue);
-      }
-      const indentSize = depth * spacesCount;
-      const currentIndent = replace.repeat(indentSize);
-      const bracketIndent = replace.repeat(indentSize - spacesCount);
+const stringify = (value, replace = ' ', spacesCount = 2) => {
+  const iter = (currentValue, depth) => {
+    if (typeof (currentValue) !== 'object' || currentValue === null) {
+      return String(currentValue);
+    }
+    const indentSize = depth * spacesCount;
+    const currentIndent = replace.repeat(indentSize);
+    const bracketIndent = replace.repeat(indentSize - spacesCount);
 
-      const arrValue = Object.entries(currentValue);
-      const lines = arrValue.map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
-      const result = ['{', ...lines, `${bracketIndent}}`].join('\n');
+    const arrValue = Object.entries(currentValue);
+    const lines = arrValue.map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+    const result = ['{', ...lines, `${bracketIndent}}`].join('\n');
 
-      return result;
-    };
-
-    return iter(value, 1);
+    return result;
   };
 
+  return iter(value, 6);
+};
+
+const stylish = (arr, replacer = ' ', spaceCount = 2) => {
   const iter = (currentValue, depth) => {
     if (typeof (currentValue) !== 'object' || currentValue === null) {
       return String(currentValue);
