@@ -24,6 +24,6 @@ test('getCompareJSON', () => {
   expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toEqual(resultJSON);
 });
 
-/* test('getCompareYML', () => {
+test('getCompareYML', () => {
   expect(genDiff('__fixtures__/filepath1.yml', '__fixtures__/filepath2.yml')).toEqual(expectResult);
-}); */
+});

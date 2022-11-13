@@ -14,7 +14,7 @@ const stringify = (value, replace = ' ', spacesCount = 2) => {
     return result;
   };
 
-  return iter(value, 6);
+  return iter(value, 1);
 };
 
 const stylish = (arr, replacer = ' ', spaceCount = 2) => {
@@ -29,13 +29,13 @@ const stylish = (arr, replacer = ' ', spaceCount = 2) => {
 
     const lines = currentValue.map((obj) => {
       if (obj.type === 'nested') {
-        return `${currentIndent}${obj.key}: ${iter(obj.children, depth + 1)}`;
+        return `${currentIndent}  ${obj.key}: ${iter(obj.children, depth + 1)}`;
       }
 
       switch (obj.type) {
         case 'changed':
           return `${currentIndent}- ${obj.key}: ${stringify(obj.value1)}
-${currentIndent}+ ${obj.key}: ${stringify(obj.value2)}`;
+${currentIndent}+ ${obj.key}: ${stringify(obj.value2, ' ', depth)}`;
         case 'deleted':
           return `${currentIndent}- ${obj.key}: ${stringify(obj.value)}`;
         case 'added':
@@ -52,7 +52,7 @@ ${currentIndent}+ ${obj.key}: ${stringify(obj.value2)}`;
     ].join('\n');
   };
 
-  return iter(arr, 2);
+  return iter(arr, 1);
 };
 
 export default stylish;
