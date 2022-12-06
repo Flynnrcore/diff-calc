@@ -1,4 +1,5 @@
 ## Difference Calculator
+Compares two configuration files and shows a difference
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Flynnrcore/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Flynnrcore/frontend-project-46/actions)
