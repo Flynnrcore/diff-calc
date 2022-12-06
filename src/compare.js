@@ -19,6 +19,7 @@ const getCompareObj = (obj1, obj2) => {
 
     return acc;
   }, []);
+
   return result;
 };
 
