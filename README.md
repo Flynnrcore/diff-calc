@@ -26,4 +26,4 @@ Difference Calculator program designed to show diffrence between ".json" and ".y
 
 
 ## Example: start, help about and operation of the programm
-[![asciicast](https://asciinema.org/a/WhysC51z9SRV5rB4fVLRkUJmk.svg)](https://asciinema.org/a/WhysC51z9SRV5rB4fVLRkUJmk)
+[![asciicast](https://asciinema.org/a/N2jCSA3S0FGKctIERNJtYNIrm.svg)](https://asciinema.org/a/N2jCSA3S0FGKctIERNJtYNIrm)
