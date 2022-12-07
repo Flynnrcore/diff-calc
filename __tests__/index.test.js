@@ -12,6 +12,7 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 
 const resultStylish = readFile('resultStylish.txt');
 const resultPlain = readFile('resultPlain.txt');
+const resultJSON = readFile('resultJSON.txt');
 
 const expectResult = `{
   - follow: false
@@ -29,4 +30,8 @@ test('getCompareStylisFormat', () => {
 
 test('getComparePlainFormat', () => {
   expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain')).toEqual(resultPlain);
+});
+
+test('getComparePlainFormat', () => {
+  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'json')).toEqual(resultJSON);
 });
