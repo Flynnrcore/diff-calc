@@ -5,7 +5,7 @@ const getCompareObj = (obj1, obj2) => {
 
   const getCompare = (data1, data2, key) => {
     if (typeof (data1[key]) === 'object' && typeof (data2[key]) === 'object') {
-      return { type: 'nested', key: `${key}`, children: getCompareObj(data1[key], data2[key]) }; 
+      return { type: 'nested', key: `${key}`, children: getCompareObj(data1[key], data2[key]) };
     }
 
     if (!Object.hasOwn(data1, key)) {
