@@ -2,25 +2,30 @@ import _ from 'lodash';
 
 const getCompareObj = (obj1, obj2) => {
   const commonKeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
-  const result = commonKeys.reduce((acc, key) => {
-    if (typeof (obj1[key]) === 'object' && typeof (obj2[key]) === 'object') {
-      acc.push({ type: 'nested', key: `${key}`, children: getCompareObj(obj1[key], obj2[key]) });
-    } else if (!Object.hasOwn(obj1, key)) {
-      acc.push({ type: 'added', key: `${key}`, value: obj2[key] });
-    } else if (!Object.hasOwn(obj2, key)) {
-      acc.push({ type: 'deleted', key: `${key}`, value: obj1[key] });
-    } else if (obj1[key] !== obj2[key]) {
-      acc.push({
-        type: 'changed', key: `${key}`, value1: obj1[key], value2: obj2[key],
-      });
-    } else if (obj1[key] === obj2[key]) {
-      acc.push({ type: 'unchanged', key: `${key}`, value: obj1[key] });
+
+  const getCompare = (data1, data2, key) => {
+    if (typeof (data1[key]) === 'object' && typeof (data2[key]) === 'object') {
+      return { type: 'nested', key: `${key}`, children: getCompareObj(data1[key], data2[key]) };  
     }
 
-    return acc;
-  }, []);
+    if (!Object.hasOwn(data1, key)) {
+      return { type: 'added', key: `${key}`, value: data2[key] };
+    }
 
-  return result;
+    if (!Object.hasOwn(data2, key)) {
+      return { type: 'deleted', key: `${key}`, value: data1[key] }
+    }
+
+    if (data1[key] !== data2[key]) {
+      return {
+        type: 'changed', key: `${key}`, value1: data1[key], value2: data2[key],
+      };
+    }
+
+    return { type: 'unchanged', key: `${key}`, value: data1[key] };
+  };
+
+  return commonKeys.map((key) => getCompare(obj1, obj2, key));
 };
 
 export default getCompareObj;

@@ -32,6 +32,6 @@ test('getComparePlainFormat', () => {
   expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain')).toEqual(resultPlain);
 });
 
-test('getComparePlainFormat', () => {
+test('getCompareJSONFormat', () => {
   expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'json')).toEqual(resultJSON);
 });
