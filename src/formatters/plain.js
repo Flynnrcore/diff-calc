@@ -1,4 +1,4 @@
-const display = (content) => {
+const stringify = (content) => {
   if (content === null) {
     return null;
   }
@@ -15,24 +15,21 @@ const display = (content) => {
 
 const plain = (arr) => {
   const iter = (currentValue, depth = '') => {
-    const lines = currentValue
-      .filter((obj) => obj.type !== 'unchanged')
-      .map((obj) => {
-        if (obj.type === 'nested') {
+    const fileredContent = currentValue.filter((obj) => obj.type !== 'unchanged');
+    const lines = fileredContent.map((obj) => {
+      switch (obj.type) {
+        case 'changed':
+          return `Property '${depth}${obj.key}' was updated. From ${stringify(obj.value1)} to ${stringify(obj.value2)}`;
+        case 'deleted':
+          return `Property '${depth}${obj.key}' was removed`;
+        case 'added':
+          return `Property '${depth}${obj.key}' was added with value: ${stringify(obj.value)}`;
+        case 'nested':
           return iter(obj.children, `${depth}${obj.key}.`);
-        }
-
-        switch (obj.type) {
-          case 'changed':
-            return `Property '${depth}${obj.key}' was updated. From ${display(obj.value1)} to ${display(obj.value2)}`;
-          case 'deleted':
-            return `Property '${depth}${obj.key}' was removed`;
-          case 'added':
-            return `Property '${depth}${obj.key}' was added with value: ${display(obj.value)}`;
-          default:
-            throw new Error('Error in the type of data changes');
-        }
-      });
+        default:
+          throw new Error('Error in the type of data changes');
+      }
+    });
 
     return lines.join('\n');
   };

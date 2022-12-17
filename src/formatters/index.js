@@ -1,8 +1,8 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const getDisplay = (resultCompare, format = 'stylish') => {
-  switch (format) {
+const format = (resultCompare, type) => {
+  switch (type) {
     case 'plain':
       return plain(resultCompare);
     case 'json':
@@ -12,4 +12,4 @@ const getDisplay = (resultCompare, format = 'stylish') => {
   }
 };
 
-export default getDisplay;
+export default format;

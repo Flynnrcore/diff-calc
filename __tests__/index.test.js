@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import genDiff from '../index.js';
-import stylish from '../src/formatters/stylish.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,24 +13,24 @@ const resultStylish = readFile('resultStylish.txt');
 const resultPlain = readFile('resultPlain.txt');
 const resultJSON = readFile('resultJSON.txt');
 
-const expectResult = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`;
-
-test('getCompareStylisFormat', () => {
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', stylish)).toEqual(resultStylish);
-  expect(genDiff('__fixtures__/filepath1.yml', '__fixtures__/filepath2.yml')).toEqual(expectResult);
-});
-
-test('getComparePlainFormat', () => {
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain')).toEqual(resultPlain);
-});
-
-test('getCompareJSONFormat', () => {
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'json')).toEqual(resultJSON);
+test.each([
+  {
+    file1: '__fixtures__/file1.json', file2: '__fixtures__/file2.json', style: 'stylish', expected: resultStylish,
+  },
+  {
+    file1: '__fixtures__/filepath1.yml', file2: '__fixtures__/filepath2.yml', expected: resultStylish,
+  },
+  {
+    file1: '__fixtures__/file1.json', file2: '__fixtures__/file2.json', style: 'plain', expected: resultPlain,
+  },
+  {
+    file1: '__fixtures__/file1.json', file2: '__fixtures__/file2.json', style: 'json', expected: resultJSON,
+  },
+  {
+    file1: '__fixtures__/filepath1.yml', file2: '__fixtures__/filepath2.yml', style: 'plain', expected: resultPlain,
+  },
+])('getCompare', ({
+  file1, file2, style, expected,
+}) => {
+  expect(genDiff(file1, file2, style)).toEqual(expected);
 });
