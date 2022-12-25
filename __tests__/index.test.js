@@ -36,7 +36,7 @@ test.each([
   {
     file1: file1YML, file2: file2YAML, style: 'json', expected: resultJSON,
   },
-])('test $style formatter', ({
+])('$style formatter', ({
   file1, file2, style, expected,
 }) => {
   expect(genDiff(file1, file2, style)).toEqual(expected);
