@@ -15,8 +15,7 @@ const stringify = (content) => {
 
 const plain = (arr) => {
   const iter = (currentValues, depth = '') => {
-    const fileredContent = currentValues.filter((node) => node.type !== 'unchanged');
-    const lines = fileredContent.map((node) => {
+    const lines = currentValues.map((node) => {
       switch (node.type) {
         case 'changed':
           return `Property '${depth}${node.key}' was updated. From ${stringify(node.value1)} to ${stringify(node.value2)}`;
@@ -24,14 +23,16 @@ const plain = (arr) => {
           return `Property '${depth}${node.key}' was removed`;
         case 'added':
           return `Property '${depth}${node.key}' was added with value: ${stringify(node.value)}`;
+        case 'unchanged':
+          return 'Property unchanged';
         case 'nested':
           return iter(node.children, `${depth}${node.key}.`);
         default:
-          throw new Error('Error in the type of data changes');
+          throw new Error(`Unknown type of data: ${node.type}`);
       }
     });
-
-    return lines.join('\n');
+    const filteredContent = lines.filter((node) => node !== 'Property unchanged');
+    return filteredContent.join('\n');
   };
 
   return iter(arr);

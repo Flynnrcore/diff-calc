@@ -28,7 +28,7 @@ const stylish = (arr) => {
         case 'unchanged':
           return `${getIndent(depth)}  ${node.key}: ${stringify(node.value, depth + 1)}`;
         default:
-          throw new Error('Error in the type of data changes');
+          throw new Error(`Unknown type of data: ${node.type}`);
       }
     });
 

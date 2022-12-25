@@ -1,7 +1,7 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const format = (resultCompare, type) => {
+const formatter = (resultCompare, type) => {
   switch (type) {
     case 'plain':
       return plain(resultCompare);
@@ -12,4 +12,4 @@ const format = (resultCompare, type) => {
   }
 };
 
-export default format;
+export default formatter;
