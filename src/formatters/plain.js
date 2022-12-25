@@ -14,18 +14,18 @@ const stringify = (content) => {
 };
 
 const plain = (arr) => {
-  const iter = (currentValue, depth = '') => {
-    const fileredContent = currentValue.filter((obj) => obj.type !== 'unchanged');
-    const lines = fileredContent.map((obj) => {
-      switch (obj.type) {
+  const iter = (currentValues, depth = '') => {
+    const fileredContent = currentValues.filter((node) => node.type !== 'unchanged');
+    const lines = fileredContent.map((node) => {
+      switch (node.type) {
         case 'changed':
-          return `Property '${depth}${obj.key}' was updated. From ${stringify(obj.value1)} to ${stringify(obj.value2)}`;
+          return `Property '${depth}${node.key}' was updated. From ${stringify(node.value1)} to ${stringify(node.value2)}`;
         case 'deleted':
-          return `Property '${depth}${obj.key}' was removed`;
+          return `Property '${depth}${node.key}' was removed`;
         case 'added':
-          return `Property '${depth}${obj.key}' was added with value: ${stringify(obj.value)}`;
+          return `Property '${depth}${node.key}' was added with value: ${stringify(node.value)}`;
         case 'nested':
-          return iter(obj.children, `${depth}${obj.key}.`);
+          return iter(node.children, `${depth}${node.key}.`);
         default:
           throw new Error('Error in the type of data changes');
       }

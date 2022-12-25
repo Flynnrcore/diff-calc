@@ -14,19 +14,21 @@ const stringify = (value, depth) => {
 };
 
 const stylish = (arr) => {
-  const iter = (currentValue, depth) => {
-    const lines = currentValue.map((obj) => {
-      switch (obj.type) {
+  const iter = (currentValues, depth) => {
+    const lines = currentValues.map((node) => {
+      switch (node.type) {
         case 'changed':
-          return [`${getIndent(depth)}- ${obj.key}: ${stringify(obj.value1, depth + 1)}`, `${getIndent(depth)}+ ${obj.key}: ${stringify(obj.value2, depth + 1)}`].join('\n');
+          return [`${getIndent(depth)}- ${node.key}: ${stringify(node.value1, depth + 1)}`, `${getIndent(depth)}+ ${node.key}: ${stringify(node.value2, depth + 1)}`].join('\n');
         case 'deleted':
-          return `${getIndent(depth)}- ${obj.key}: ${stringify(obj.value, depth + 1)}`;
+          return `${getIndent(depth)}- ${node.key}: ${stringify(node.value, depth + 1)}`;
         case 'added':
-          return `${getIndent(depth)}+ ${obj.key}: ${stringify(obj.value, depth + 1)}`;
+          return `${getIndent(depth)}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
         case 'nested':
-          return `${getIndent(depth)}  ${obj.key}: {\n${iter(obj.children, depth + 1)}\n${getBackIndent(depth)}}`;
+          return `${getIndent(depth)}  ${node.key}: {\n${iter(node.children, depth + 1)}\n${getBackIndent(depth)}}`;
+        case 'unchanged':
+          return `${getIndent(depth)}  ${node.key}: ${stringify(node.value, depth + 1)}`;
         default:
-          return `${getIndent(depth)}  ${obj.key}: ${stringify(obj.value, depth + 1)}`;
+          throw new Error('Error in the type of data changes');
       }
     });
 
