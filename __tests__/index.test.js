@@ -20,3 +20,15 @@ describe('checking genDiff operation', () => {
     expect(genDiff(filepath1, filepath2, 'json')).toEqual(readFile('resultJSON.txt'));
   });
 });
+
+test('unknown file extension', () => {
+  expect(() => genDiff('__fixtures__/resultStylish.txt', '__fixtures__/resultPlain.txt'))
+    .toThrow('Unknown format of file: txt');
+});
+
+test('unknown output format', () => {
+  const filepath1 = getFixturePath('file1.json');
+  const filepath2 = getFixturePath('file2.json');
+  expect(() => genDiff(filepath1, filepath2, 'list'))
+    .toThrow('Unknown output format: list');
+});

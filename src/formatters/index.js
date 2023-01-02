@@ -7,8 +7,10 @@ const formatter = (ast, type) => {
       return plain(ast);
     case 'json':
       return JSON.stringify(ast);
-    default:
+    case 'stylish':
       return stylish(ast);
+    default:
+      throw new Error(`Unknown output format: ${type}`);
   }
 };
 
