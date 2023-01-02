@@ -24,14 +24,14 @@ const plain = (arr) => {
         case 'added':
           return `Property '${depth}${node.key}' was added with value: ${stringify(node.value)}`;
         case 'unchanged':
-          return 'Property unchanged';
+          return null;
         case 'nested':
           return iter(node.children, `${depth}${node.key}.`);
         default:
           throw new Error(`Unknown type of data: ${node.type}`);
       }
     });
-    const filteredContent = lines.filter((node) => node !== 'Property unchanged');
+    const filteredContent = lines.filter((node) => node !== null);
     return filteredContent.join('\n');
   };
 

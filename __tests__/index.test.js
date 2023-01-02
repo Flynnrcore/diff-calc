@@ -8,35 +8,15 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-const file1JSON = getFixturePath('file1.json');
-const file2JSON = getFixturePath('file2.json');
-const file1YML = getFixturePath('file1.yml');
-const file2YAML = getFixturePath('file2.yaml');
-const resultStylish = readFile('resultStylish.txt');
-const resultPlain = readFile('resultPlain.txt');
-const resultJSON = readFile('resultJSON.txt');
+const fileFormats = ['json', 'yml', 'yaml'];
 
-test.each([
-  {
-    file1: file1JSON, file2: file2JSON, style: 'default', expected: resultStylish,
-  },
-  {
-    file1: file1YML, file2: file2YAML, style: 'stylish', expected: resultStylish,
-  },
-  {
-    file1: file1JSON, file2: file2JSON, style: 'plain', expected: resultPlain,
-  },
-  {
-    file1: file1JSON, file2: file2JSON, style: 'json', expected: resultJSON,
-  },
-  {
-    file1: file1YML, file2: file2YAML, style: 'plain', expected: resultPlain,
-  },
-  {
-    file1: file1YML, file2: file2YAML, style: 'json', expected: resultJSON,
-  },
-])('$style formatter', ({
-  file1, file2, style, expected,
-}) => {
-  expect(genDiff(file1, file2, style)).toEqual(expected);
+describe('checking genDiff operation', () => {
+  test.each(fileFormats)('genDiff %p file format check', (format) => {
+    const filepath1 = getFixturePath(`file1.${format}`);
+    const filepath2 = getFixturePath(`file2.${format}`);
+    expect(genDiff(filepath1, filepath2)).toEqual(readFile('resultStylish.txt'));
+    expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(readFile('resultStylish.txt'));
+    expect(genDiff(filepath1, filepath2, 'plain')).toEqual(readFile('resultPlain.txt'));
+    expect(genDiff(filepath1, filepath2, 'json')).toEqual(readFile('resultJSON.txt'));
+  });
 });

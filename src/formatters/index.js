@@ -1,14 +1,14 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const formatter = (resultCompare, type) => {
+const formatter = (ast, type) => {
   switch (type) {
     case 'plain':
-      return plain(resultCompare);
+      return plain(ast);
     case 'json':
-      return JSON.stringify(resultCompare);
+      return JSON.stringify(ast);
     default:
-      return stylish(resultCompare);
+      return stylish(ast);
   }
 };
 
